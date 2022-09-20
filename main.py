@@ -40,7 +40,7 @@ async def amount_pass():
         return option
     except:
         print('That\'s not a number.')
-        time.sleep(2.5)
+        await asyncio.sleep(2.5)
         await menu()
 
 
