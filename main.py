@@ -94,7 +94,7 @@ async def menu():
 
         input(F'\n{lw}Press enter to return to the main menu.{r}')
         await menu()
-    except Exception as e:
+    except:
         print('Not a valid option')
 
         time.sleep(2)
