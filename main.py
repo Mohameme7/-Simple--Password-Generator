@@ -24,9 +24,9 @@ async def phrase_num_char():
     async with aiohttp.ClientSession() as session:
 
          request = await session.get('https://random-word-api.herokuapp.com/word?number=1&length=6')
-         json = await request.json()
-         id = json[0]
-         for char in id:
+         phrase = (await) request.json()[0]
+         
+         for char in json:
           password += char + str(random.randint(10, 99)) + ''.join(
           random.choices(string.punctuation, k=random.randint(3, 5)))
     return password
