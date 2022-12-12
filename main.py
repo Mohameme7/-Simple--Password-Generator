@@ -1,6 +1,6 @@
 import random, string, os, time, aiohttp, asyncio
 from colorama import Fore
-# Colour Variables
+from tkinter.filedialog import asksaveasfile
 
 lb = Fore.LIGHTBLUE_EX
 ly = Fore.LIGHTYELLOW_EX
@@ -10,28 +10,25 @@ cy = Fore.LIGHTCYAN_EX
 lg = Fore.LIGHTGREEN_EX
 lw = Fore.LIGHTWHITE_EX
 g = Fore.GREEN
-# Letter and number string generated
 async def letter_num():
     return ''.join(random.choices(string.ascii_letters + string.digits, k=random.randint(12, 24)))
 
-# Letter, number and special character string generated
 async def letter_num_char():
     return ''.join(random.choices(string.ascii_letters + string.digits + string.punctuation, k=random.randint(12, 24)))
 
-# Number, phrase, punctuation string generated
 async def phrase_num_char():
     password = ''
     async with aiohttp.ClientSession() as session:
 
          request = await session.get('https://random-word-api.herokuapp.com/word?number=1&length=6')
-         phrase = (await) request.json()[0]
+         phrase = (await request.json())[0]
          
-         for char in json:
+         for char in phrase:
           password += char + str(random.randint(10, 99)) + ''.join(
           random.choices(string.punctuation, k=random.randint(3, 5)))
     return password
 
-# Amount of passwords needed to be generated
+
 
 async def amount_pass():
     try:
@@ -44,7 +41,7 @@ async def amount_pass():
         await menu()
 
 
-# Main menu
+
 
 async def menu():
 
@@ -91,13 +88,19 @@ async def menu():
 
 
         await asyncio.sleep(1)
+        savequest = input(f"[{cy}?{r}] Would You Like to save the passwords generated? ")
+        if savequest.lower() in ['yes', 'y']:
+            file = asksaveasfile(initialfile = 'Untitled.txt',
+            defaultextension=".txt",filetypes=[("All Files","*.*"),("Text Documents","*.txt")])
+            if file:
+             file.write('\n'.join(passwords))
+             file.close()
 
         input(F'\n{lw}Press enter to return to the main menu.{r}')
         await menu()
     except:
         print('Not a valid option')
-
-        time.sleep(2)
+        await asyncio.sleep(2)
         await menu()
 if __name__ == "__main__":
     asyncio.run(menu())
